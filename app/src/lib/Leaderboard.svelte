@@ -27,8 +27,8 @@
 
   th {
     border-radius: 0.25rem;
-    background-color: white;
-    color: #11191f;
+    background-color: ivory;
+    color: var(--background);
   }
 
   tr {
@@ -37,16 +37,16 @@
   }
 
   .win {
-    background-color: #04E762;
-    color: #11191f;
+    background-color: var(--correct);
+    color: var(--background);
   }
 
   .lose {
-    background-color: #960200;
+    background-color: var(--wrong);
   }
 
   .tie {
     background-color: darkgray;
-    color: #11191f;
+    color: var(--background);
   }
 </style>

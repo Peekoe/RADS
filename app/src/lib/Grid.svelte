@@ -10,12 +10,12 @@
   <tr>
     <th>GRID</th>
     {#each teams as team}
-      <th>{team}</th>
+      <th>{team.substring(0, 2)}</th>
     {/each}
   </tr>
   {#each Object.entries(data) as team}
     <tr>
-      <td>{team[0]}</td>
+      <td>{team[0].substring(0, 2)}</td>
       {#each Object.entries(team[1]) as result}
         <td class={state[result[1]]}></td>
       {/each}
@@ -33,19 +33,18 @@
   th,
   td {
     text-align: center;
-    padding: 10px;
     border: 1px solid #bbc6ce;
-  }
 
-  th {
+    height: 2rem;
+    width: 2rem;
   }
 
   .win {
-    background-color: #04E762;
-    color: #11191f;
+    background-color: var(--correct);
+    color: var(--background);
   }
 
   .lose {
-    background-color: #960200;
+    background-color: var(--wrong);
   }
 </style>
