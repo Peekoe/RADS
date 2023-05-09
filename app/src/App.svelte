@@ -1,14 +1,16 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { io, Socket } from "socket.io-client";
   import radsLogo from "./assets/rads.png";
   import Leaderboard from "./lib/Leaderboard.svelte";
   import Grid from "./lib/Grid.svelte";
 
-  const moves = ["RR", "RA", "RS", "RD", "AA", "AS", "AD", "SS", "SD", "DD"];
+  const moves = ["RR", "RA", "RS", "RD", "AA", "AS", "AD", "SS", "DS", "DD"];
+
   const normal_moves = moves.filter((w) => !w.includes("R"));
-  let name = "peekoe";
-  let board: boolean = true;
-  let ws: WebSocket;
+  let name = "";
+  let board: boolean = false;
+  let ws: Socket;
   let error: boolean = false;
 
   let data = {
@@ -17,21 +19,29 @@
     yao: { christos: 0, peekoe: 0, yao: 0 },
   };
 
-  async function onSubmit(e) {
+  function onSubmit(e) {
     const formData = new FormData(e.target);
-    name = formData["username"];
-    let json = Object.fromEntries(formData.entries());
+    name = formData.get("username").valueOf().toString();
 
-    ws.send(JSON.stringify(json));
+    let json = Object.fromEntries(formData.entries());
+    console.log(json);
+
+    ws.emit("json", JSON.stringify(json));
   }
 
   onMount(() => {
-    ws = new WebSocket("ws://137.151.29.178:80");
+    console.log("here");
+    ws = new io("ws://137.151.29.178:80");
     error = ws === undefined;
+    console.log(error);
 
-    ws.addEventListener("message", (event) => {
-      board = event.data !== "NEXT";
-      if (board) data = JSON.parse(event.data);
+    ws.on("NEXT", () => {
+      board = false;
+    });
+
+    ws.on("json", (event) => {
+      data = event;
+      board = true;
     });
   });
 </script>
@@ -50,7 +60,7 @@
     <div class="all_results">
       <div class="results">
         <div class="board">
-          <Leaderboard {name} teams={data[name]} />
+          <Leaderboard name={name} teams={data[name]} />
         </div>
         <div class="grid">
           <Grid {data} />
@@ -67,21 +77,34 @@
     </div>
   {:else}
     <form on:submit|preventDefault={onSubmit}>
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" />
+      <div class="grid">
+        <label for="username">
+          Username:
+          <input type="text" id="username" name="username" />
+        </label>
 
-      <label for="public">My Public:</label>
-      <input type="text" id="public" name="public" />
+        <label for="public">
+          My Public:
+          <input type="text" id="public" name="public" />
+        </label>
+      </div>
 
-      <datalist id="moves">
-        {#each moves as move}
-          <option value={move}>{move}</option>
-        {/each}
-      </datalist>
+      <datalist id="moves" />
 
       {#each normal_moves as move}
-        <label for={move}>If {move}, play:</label>
-        <input type="text" id={move} name={move} />
+        <label for={move}>
+          If {move} play:
+          <select name={move} id={move}>
+            {#each moves as move}
+              <option value={move}>{move}</option>
+            {/each}
+          </select>
+        </label>
+
+        <!-- <label for={move}>
+          If {move}, play:
+          <input type="text" id={move} name={move} />
+        </label> -->
       {/each}
 
       <input type="submit" value="Submit Moves" />
@@ -90,7 +113,7 @@
 </main>
 
 <footer>
-  <small>Frontend by Charlie<br />Game invented by Aaron & Christos</small>
+  <small>Frontend by Charlie<br />Game invented by Aaron & "christos"</small>
 </footer>
 
 <style>
