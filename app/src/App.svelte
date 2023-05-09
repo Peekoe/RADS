@@ -31,7 +31,7 @@
 
   onMount(() => {
     console.log("here");
-    ws = new io("ws://137.151.29.178:80");
+    ws = io("ws://137.151.29.178:80");
     error = ws === undefined;
     console.log(error);
 
