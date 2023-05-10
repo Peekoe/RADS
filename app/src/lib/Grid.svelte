@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let data: { string: {string: number} };
+  export let data: { [key: string]: { [key: string]: number } };
   const teams = Object.keys(data);
 
   const state = { "1": "win", "0": "tie", "-1": "lose" };
@@ -16,7 +16,7 @@
     <tr>
       <td>{team[0].substring(0, 2)}</td>
       {#each Object.entries(team[1]) as result}
-        <td class={state[result[1]]}></td>
+        <td class={state[result[1]]} />
       {/each}
     </tr>
   {/each}

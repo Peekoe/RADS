@@ -13,7 +13,7 @@
   let ws: Socket;
   let error: boolean = false;
 
-  let data = {
+  let data: { [key: string]: { [key: string]: number } } = {
     peekoe: { peekoe: 0, christos: -1, yao: 0 },
     christos: { peekoe: 1, christos: 0, yao: 0 },
     yao: { christos: 0, peekoe: 0, yao: 0 },
@@ -58,7 +58,7 @@
     <div class="all_results">
       <div class="results">
         <div class="board">
-          <Leaderboard name={name} teams={data[name]} />
+          <Leaderboard {name} teams={data[name]} />
         </div>
         <div class="grid">
           <Grid {data} />
@@ -111,7 +111,7 @@
 </main>
 
 <footer>
-  <small>Frontend by Charlie<br />Game invented by Aaron & "christos"</small>
+  <small>Frontend by Charlie<br />Game invented by Aaron & ""christos""</small>
 </footer>
 
 <style>

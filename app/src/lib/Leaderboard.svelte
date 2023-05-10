@@ -1,6 +1,6 @@
 <script lang="ts">
   export let name;
-  export let teams: { string: number };
+  export let teams: { [key: string]: number };
   // make a copy so it doesn't delete og object
   teams = Object.assign({}, teams);
   delete teams[name];
