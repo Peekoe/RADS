@@ -82,8 +82,12 @@
         </label>
 
         <label for="public">
-          My Public:
-          <input type="text" id="public" name="public" />
+          My public:
+          <select name="public" id="public">
+            {#each moves as move}
+              <option value={move}>{move}</option>
+            {/each}
+          </select>
         </label>
       </div>
 
