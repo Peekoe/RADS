@@ -31,7 +31,7 @@
 
   onMount(() => {
     console.log("here");
-    ws = io("ws://137.151.29.178:80");
+    ws = io("ws://api.rads.peekoe.net");
     error = ws === undefined;
     console.log(error);
 
