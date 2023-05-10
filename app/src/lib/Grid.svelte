@@ -1,6 +1,5 @@
 <script lang="ts">
   export let data: { string: {string: number} };
-  console.log(data);
   const teams = Object.keys(data);
 
   const state = { "1": "win", "0": "tie", "-1": "lose" };

@@ -30,10 +30,8 @@
   }
 
   onMount(() => {
-    console.log("here");
-    ws = io("ws://apirads.peekoe.net");
+    ws = io("https://apirads.peekoe.net");
     error = ws === undefined;
-    console.log(error);
 
     ws.on("NEXT", () => {
       board = false;
