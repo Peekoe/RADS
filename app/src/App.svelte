@@ -115,7 +115,7 @@
 </main>
 
 <footer>
-  <small>Frontend by Charlie<br />Game invented by Simon & Christos</small>
+  <small>Frontend by Charlie<br />Game invented by Aaron & Christos</small>
 </footer>
 
 <style>
